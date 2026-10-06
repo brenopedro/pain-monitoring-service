@@ -1,7 +1,9 @@
 package com.pain.monitoring.infrastructure.adapters.in.web.medicalcondition;
 
 import com.pain.monitoring.core.ports.in.ForManagingMedicalCondition;
+import com.pain.monitoring.core.ports.in.ForQueryingMedicalCondition;
 import com.pain.monitoring.core.ports.in.MedicalConditionInput;
+import com.pain.monitoring.core.ports.in.MedicalConditionOutput;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,17 @@ import java.util.UUID;
 public class MedicalConditionController {
 
     private final ForManagingMedicalCondition managementService;
+    private final ForQueryingMedicalCondition queryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UUID create(@RequestBody @Valid MedicalConditionInput input) {
-        return managementService.create(input);
+    public MedicalConditionOutput create(@RequestBody @Valid MedicalConditionInput input) {
+        UUID id = managementService.create(input);
+        return queryService.findById(id);
+    }
+
+    @GetMapping("/{id}")
+    public MedicalConditionOutput retrieve(@PathVariable UUID id) {
+        return queryService.findById(id);
     }
 }

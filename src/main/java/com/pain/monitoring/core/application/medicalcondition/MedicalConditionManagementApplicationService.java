@@ -1,9 +1,9 @@
 package com.pain.monitoring.core.application.medicalcondition;
 
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalCondition;
-import com.pain.monitoring.core.domain.model.medicalcondition.MedicalConditions;
 import com.pain.monitoring.core.ports.in.ForManagingMedicalCondition;
 import com.pain.monitoring.core.ports.in.MedicalConditionInput;
+import com.pain.monitoring.core.ports.out.ForHandlingMedicalConditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class MedicalConditionApplicationManagementApplicationService implements ForManagingMedicalCondition {
+public class MedicalConditionManagementApplicationService implements ForManagingMedicalCondition {
 
-    private final MedicalConditions medicalConditions;
+    private final ForHandlingMedicalConditions handlingMedicalConditions;
 
     @Override
     public UUID create(MedicalConditionInput input) {
@@ -25,7 +25,7 @@ public class MedicalConditionApplicationManagementApplicationService implements 
                 .notes(input.getNotes())
                 .build();
 
-        medicalConditions.add(medicalCondition);
+        handlingMedicalConditions.add(medicalCondition);
 
 
         return medicalCondition.id();

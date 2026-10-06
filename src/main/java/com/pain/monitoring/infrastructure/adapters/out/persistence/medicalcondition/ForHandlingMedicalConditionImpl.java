@@ -1,32 +1,19 @@
 package com.pain.monitoring.infrastructure.adapters.out.persistence.medicalcondition;
 
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalCondition;
-import com.pain.monitoring.core.domain.model.medicalcondition.MedicalConditions;
+import com.pain.monitoring.core.ports.out.ForHandlingMedicalConditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Component
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MedicalConditionsPersistenceProvider implements MedicalConditions {
+public class ForHandlingMedicalConditionImpl implements ForHandlingMedicalConditions {
 
     private final MedicalConditionPersistenceEntityRepository repository;
     private final MedicalConditionPersistenceEntityAssembler assembler;
     private final MedicalConditionPersistenceEntityDisassembler disassembler;
-
-    @Override
-    public Optional<MedicalCondition> ofId(UUID id) {
-        return repository.findById(id).map(disassembler::toDomainEntity);
-    }
-
-    @Override
-    public boolean exists(UUID id) {
-        return repository.existsById(id);
-    }
 
     @Override
     public void add(MedicalCondition aggregateRoot) {
@@ -37,11 +24,6 @@ public class MedicalConditionsPersistenceProvider implements MedicalConditions {
                         persistenceEntity -> update(aggregateRoot, persistenceEntity),
                         () -> insert(aggregateRoot)
                 );
-    }
-
-    @Override
-    public long count() {
-        return 0;
     }
 
 

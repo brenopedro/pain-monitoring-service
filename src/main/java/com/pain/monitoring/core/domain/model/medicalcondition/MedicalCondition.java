@@ -1,20 +1,16 @@
 package com.pain.monitoring.core.domain.model.medicalcondition;
 
-import com.pain.monitoring.core.domain.model.AggregateRoot;
-import com.pain.monitoring.core.domain.model.DurationCalculator;
-import com.pain.monitoring.core.domain.model.FieldValidator;
-import com.pain.monitoring.core.domain.model.IdGenerator;
+import com.pain.monitoring.core.domain.model.*;
 import lombok.Builder;
 
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.pain.monitoring.core.domain.model.ErrorMessages.VALIDATION_ERROR_END_DATE_BEFORE_START_DATE;
-import static com.pain.monitoring.core.domain.model.ErrorMessages.VALIDATION_ERROR_MEDICAL_CONDITION_BLANK;
+import static com.pain.monitoring.core.domain.model.ErrorMessages.*;
 
 
-public class MedicalCondition implements AggregateRoot<UUID> {
+public class MedicalCondition {
 
     private UUID id;
     private String name;
@@ -44,9 +40,9 @@ public class MedicalCondition implements AggregateRoot<UUID> {
 
         this.setId(id);
         this.setName(name);
+        this.setOnGoing(onGoing);
         this.setStartDate(startDate);
         this.setEndDate(endDate);
-        this.setOnGoing(onGoing);
         this.setNotes(notes);
         this.setDuration(duration == null ? DurationCalculator.calculateDuration(onGoing, startDate, endDate) : duration);
     }
@@ -96,8 +92,10 @@ public class MedicalCondition implements AggregateRoot<UUID> {
 
     private void setEndDate(LocalDate endDate) {
         Objects.requireNonNull(this.startDate);
+        if (this.onGoing)
+            throw new CannotHaveEndDateIfOnGoingException(VALIDATION_ERROR_END_DATE_WITH_ON_GOING);
         if (this.startDate.isAfter(endDate))
-            throw new IllegalArgumentException(VALIDATION_ERROR_END_DATE_BEFORE_START_DATE);
+            throw new StartDateAfterEndDateException(VALIDATION_ERROR_END_DATE_BEFORE_START_DATE);
         this.endDate = endDate;
     }
 
