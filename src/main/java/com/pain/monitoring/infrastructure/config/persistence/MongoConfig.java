@@ -1,0 +1,41 @@
+package com.pain.monitoring.infrastructure.config.persistence;
+
+import org.springframework.boot.mongodb.autoconfigure.MongoClientSettingsBuilderCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MongoConfig {
+
+    @Bean
+    public MongoClientSettingsBuilderCustomizer uuidCustomizer() {
+        return builder -> builder.uuidRepresentation(org.bson.UuidRepresentation.STANDARD);
+    }
+
+//    @Bean
+//    public MongoCustomConversions customConversions() {
+//        return new MongoCustomConversions(
+//                List.of(new OffsetDateTimeReadConverter(), new OffsetDateTimeWriteConverter()));
+//    }
+//
+//    @Bean
+//    public MongoTransactionManager mongoTransactionManager(MongoDatabaseFactory factory) {
+//        return new MongoTransactionManager(factory);
+//    }
+//
+//    public static class OffsetDateTimeReadConverter implements Converter<Date, OffsetDateTime> {
+//
+//        @Override
+//        public OffsetDateTime convert(Date source) {
+//            return source.toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime();
+//        }
+//    }
+//
+//    public static class OffsetDateTimeWriteConverter implements Converter<OffsetDateTime, Date> {
+//
+//        @Override
+//        public Date convert(OffsetDateTime source) {
+//            return Date.from(source.toInstant());
+//        }
+//    }
+}

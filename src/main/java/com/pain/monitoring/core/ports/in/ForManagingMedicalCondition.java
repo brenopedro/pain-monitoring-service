@@ -1,0 +1,8 @@
+package com.pain.monitoring.core.ports.in;
+
+import java.util.UUID;
+
+public interface ForManagingMedicalCondition {
+
+    UUID create(MedicalConditionInput input);
+}
