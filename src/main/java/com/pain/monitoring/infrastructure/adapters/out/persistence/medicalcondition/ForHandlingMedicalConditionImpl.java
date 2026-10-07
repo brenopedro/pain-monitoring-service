@@ -26,6 +26,11 @@ public class ForHandlingMedicalConditionImpl implements ForHandlingMedicalCondit
                 );
     }
 
+    @Override
+    public void delete(UUID id) {
+        repository.deleteById(id);
+    }
+
 
     private void update (MedicalCondition aggregateRoot, MedicalConditionPersistenceEntity persistenceEntity) {
         persistenceEntity = assembler.merge(persistenceEntity, aggregateRoot);

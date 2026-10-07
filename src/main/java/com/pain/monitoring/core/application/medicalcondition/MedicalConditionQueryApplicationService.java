@@ -4,11 +4,11 @@ import com.pain.monitoring.core.ports.in.ForQueryingMedicalCondition;
 import com.pain.monitoring.core.ports.in.MedicalConditionOutput;
 import com.pain.monitoring.core.ports.out.ForObtainingMedicalConditions;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class MedicalConditionQueryApplicationService implements ForQueryingMedicalCondition {
 
@@ -17,5 +17,10 @@ public class MedicalConditionQueryApplicationService implements ForQueryingMedic
     @Override
     public MedicalConditionOutput findById(UUID id) {
         return obtainingMedicalConditions.findById(id);
+    }
+
+    @Override
+    public Boolean exists(UUID id) {
+        return obtainingMedicalConditions.exists(id);
     }
 }

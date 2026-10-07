@@ -30,4 +30,9 @@ public class MedicalConditionManagementApplicationService implements ForManaging
 
         return medicalCondition.id();
     }
+
+    @Override
+    public void delete(UUID id) {
+        handlingMedicalConditions.delete(id);
+    }
 }

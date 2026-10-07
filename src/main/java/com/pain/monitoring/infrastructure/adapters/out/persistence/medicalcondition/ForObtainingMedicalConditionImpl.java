@@ -22,4 +22,9 @@ public class ForObtainingMedicalConditionImpl implements ForObtainingMedicalCond
                 medicalCondition -> modelMapper.map(medicalCondition, MedicalConditionOutput.class))
                 .orElseThrow(MedicalConditionNotFoundException::new);
     }
+
+    @Override
+    public Boolean exists(UUID id) {
+        return repository.existsById(id);
+    }
 }

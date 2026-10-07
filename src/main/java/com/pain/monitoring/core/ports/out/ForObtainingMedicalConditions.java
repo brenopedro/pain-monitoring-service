@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface ForObtainingMedicalConditions {
     MedicalConditionOutput findById(UUID id);
+
+    Boolean exists(UUID id);
 }

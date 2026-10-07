@@ -1,5 +1,6 @@
 package com.pain.monitoring.infrastructure.adapters.in.web.exceptionhandler;
 
+import com.pain.monitoring.core.domain.model.DomainEntityNotFoundException;
 import com.pain.monitoring.core.domain.model.DomainException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,15 +44,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return super.handleExceptionInternal(ex, problemDetail, headers, status, request);
     }
 
-//    @ExceptionHandler({ DomainEntityNotFoundException.class, ResourceNotFoundException.class })
-//    public ProblemDetail handleResourceNotFoundException(Exception ex) {
-//        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
-//        problemDetail.setTitle("Not found");
-//        problemDetail.setDetail(ex.getMessage());
-//        problemDetail.setType(URI.create("/errors/not-found"));
-//        return problemDetail;
-//    }
-//
+    @ExceptionHandler(DomainEntityNotFoundException.class)
+    public ProblemDetail handleResourceNotFoundException(Exception ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
+        problemDetail.setTitle("Not found");
+        problemDetail.setDetail(ex.getMessage());
+        problemDetail.setType(URI.create("/errors/not-found"));
+        return problemDetail;
+    }
+
     @ExceptionHandler(DomainException.class)
     public ProblemDetail handleUnprocessableException(Exception ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.UNPROCESSABLE_CONTENT);
