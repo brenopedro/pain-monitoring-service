@@ -10,7 +10,7 @@ import java.util.UUID;
 import static com.pain.monitoring.core.domain.model.ErrorMessages.*;
 
 
-public class MedicalCondition {
+public class MedicalCondition implements AggregateRoot<UUID> {
 
     private UUID id;
     private String name;
@@ -45,6 +45,21 @@ public class MedicalCondition {
         this.setEndDate(endDate);
         this.setNotes(notes);
         this.setDuration(duration == null ? DurationCalculator.calculateDuration(onGoing, startDate, endDate) : duration);
+    }
+
+    public void changeName(String name) {
+        this.setName(name);
+    }
+
+    public void changeNotes(String notes) {
+        this.setNotes(notes);
+    }
+
+    public void changeDates(LocalDate startDate, LocalDate endDate, Boolean onGoing) {
+        this.setStartDate(startDate);
+        this.setOnGoing(onGoing);
+        this.setEndDate(endDate);
+        this.setDuration(DurationCalculator.calculateDuration(this.onGoing, this.startDate, this.endDate));
     }
 
     public UUID id() {
@@ -87,15 +102,27 @@ public class MedicalCondition {
 
     private void setStartDate(LocalDate startDate) {
         Objects.requireNonNull(startDate);
+        if (startDate.isAfter(LocalDate.now()))
+            throw new DateAfterNowException();
         this.startDate = startDate;
     }
 
     private void setEndDate(LocalDate endDate) {
+        if (endDate == null) {
+            if (!this.onGoing)
+                throw new CannotHaveEndDateIfOnGoingException(VALIDATION_ERROR_END_DATE_NECESSARY);
+            this.endDate = null;
+            return;
+        }
         Objects.requireNonNull(this.startDate);
+
+        if (endDate.isAfter(LocalDate.now()))
+            throw new DateAfterNowException();
         if (this.onGoing)
             throw new CannotHaveEndDateIfOnGoingException(VALIDATION_ERROR_END_DATE_WITH_ON_GOING);
         if (this.startDate.isAfter(endDate))
             throw new StartDateAfterEndDateException(VALIDATION_ERROR_END_DATE_BEFORE_START_DATE);
+
         this.endDate = endDate;
     }
 

@@ -1,6 +1,5 @@
 package com.pain.monitoring.infrastructure.adapters.in.web.medicalcondition;
 
-import com.pain.monitoring.core.domain.model.medicalcondition.MedicalConditionNotFoundException;
 import com.pain.monitoring.core.ports.in.ForManagingMedicalCondition;
 import com.pain.monitoring.core.ports.in.ForQueryingMedicalCondition;
 import com.pain.monitoring.core.ports.in.MedicalConditionInput;
@@ -28,16 +27,19 @@ public class MedicalConditionController {
     }
 
     @GetMapping("/{id}")
-    public MedicalConditionOutput retrieve(@PathVariable UUID id) {
+    public MedicalConditionOutput findById(@PathVariable UUID id) {
         return queryService.findById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
-        if (Boolean.TRUE.equals(queryService.exists(id)))
-            managementService.delete(id);
-        else
-            throw new MedicalConditionNotFoundException(id);
+        managementService.delete(id);
+    }
+
+    @PutMapping("/{id}")
+    public MedicalConditionOutput update(@PathVariable UUID id, @RequestBody @Valid MedicalConditionInput input) {
+        managementService.update(id, input);
+        return queryService.findById(id);
     }
 }

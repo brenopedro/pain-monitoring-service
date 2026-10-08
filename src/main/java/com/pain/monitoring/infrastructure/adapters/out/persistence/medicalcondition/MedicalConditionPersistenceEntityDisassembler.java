@@ -10,9 +10,9 @@ public class MedicalConditionPersistenceEntityDisassembler {
         return MedicalCondition.existing()
                 .id(persistenceEntity.getId())
                 .name(persistenceEntity.getName())
+                .onGoing(persistenceEntity.getOnGoing())
                 .startDate(persistenceEntity.getStartDate())
                 .endDate(persistenceEntity.getEndDate())
-                .onGoing(persistenceEntity.getOnGoing())
                 .notes(persistenceEntity.getNotes())
                 .duration(persistenceEntity.getDuration())
                 .build();
