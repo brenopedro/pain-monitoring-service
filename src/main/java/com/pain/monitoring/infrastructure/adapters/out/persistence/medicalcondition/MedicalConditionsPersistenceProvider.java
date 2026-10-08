@@ -42,6 +42,11 @@ public class MedicalConditionsPersistenceProvider implements MedicalConditions {
         return repository.count();
     }
 
+    @Override
+    public void delete(MedicalCondition medicalCondition) {
+        repository.delete(assembler.fromDomain(medicalCondition));
+    }
+
     private void update (MedicalCondition aggregateRoot, MedicalConditionPersistenceEntity persistenceEntity) {
         persistenceEntity = assembler.merge(persistenceEntity, aggregateRoot);
         repository.save(persistenceEntity);

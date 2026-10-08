@@ -5,8 +5,6 @@ import com.pain.monitoring.core.domain.model.medicalcondition.MedicalConditionNo
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalConditions;
 import com.pain.monitoring.core.ports.in.ForManagingMedicalCondition;
 import com.pain.monitoring.core.ports.in.MedicalConditionInput;
-import com.pain.monitoring.core.ports.out.ForHandlingMedicalConditions;
-import com.pain.monitoring.core.ports.out.ForObtainingMedicalConditions;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MedicalConditionManagementApplicationService implements ForManagingMedicalCondition {
 
-    private final ForHandlingMedicalConditions handlingMedicalConditions;
     private final MedicalConditions medicalConditions;
-    private final ForObtainingMedicalConditions forObtainingMedicalConditions;
 
     @Override
     public UUID create(MedicalConditionInput input) {
@@ -40,7 +36,7 @@ public class MedicalConditionManagementApplicationService implements ForManaging
     public void delete(@NotNull UUID id) {
         MedicalCondition medicalCondition = medicalConditions.ofId(id)
                 .orElseThrow(MedicalConditionNotFoundException::new);
-        handlingMedicalConditions.delete(medicalCondition.id());
+        medicalConditions.delete(medicalCondition);
     }
 
     @Override
