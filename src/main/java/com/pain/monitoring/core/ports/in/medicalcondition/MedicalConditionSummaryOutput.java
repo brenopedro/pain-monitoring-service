@@ -1,4 +1,4 @@
-package com.pain.monitoring.core.ports.in;
+package com.pain.monitoring.core.ports.in.medicalcondition;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

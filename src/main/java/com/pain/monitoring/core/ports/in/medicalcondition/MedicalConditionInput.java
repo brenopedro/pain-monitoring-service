@@ -1,24 +1,28 @@
-package com.pain.monitoring.core.ports.in;
+package com.pain.monitoring.core.ports.in.medicalcondition;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalConditionOutput {
+public class MedicalConditionInput {
 
-    private UUID id;
+    @NotBlank
     private String name;
+
+    @NotNull
     private LocalDate startDate;
     private LocalDate endDate;
+
+    @NotNull
     private Boolean onGoing;
     private String notes;
-    private String duration;
 }

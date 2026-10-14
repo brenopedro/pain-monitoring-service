@@ -110,7 +110,7 @@ public class MedicalCondition implements AggregateRoot<UUID> {
     private void setEndDate(LocalDate endDate) {
         if (endDate == null) {
             if (!this.onGoing)
-                throw new CannotHaveEndDateIfOnGoingException(VALIDATION_ERROR_END_DATE_NECESSARY);
+                throw new MedicalConditionRequiresEndDateException(VALIDATION_ERROR_END_DATE_NECESSARY);
             this.endDate = null;
             return;
         }
@@ -119,7 +119,7 @@ public class MedicalCondition implements AggregateRoot<UUID> {
         if (endDate.isAfter(LocalDate.now()))
             throw new DateAfterNowException();
         if (this.onGoing)
-            throw new CannotHaveEndDateIfOnGoingException(VALIDATION_ERROR_END_DATE_WITH_ON_GOING);
+            throw new OngoingEventCannotHaveEndDateException(VALIDATION_ERROR_END_DATE_WITH_ON_GOING);
         if (this.startDate.isAfter(endDate))
             throw new StartDateAfterEndDateException(VALIDATION_ERROR_END_DATE_BEFORE_START_DATE);
 

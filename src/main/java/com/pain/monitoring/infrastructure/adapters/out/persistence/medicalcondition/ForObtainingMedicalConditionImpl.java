@@ -2,7 +2,7 @@ package com.pain.monitoring.infrastructure.adapters.out.persistence.medicalcondi
 
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalCondition;
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalConditionNotFoundException;
-import com.pain.monitoring.core.ports.out.ForObtainingMedicalConditions;
+import com.pain.monitoring.core.ports.out.medicalcondition.ForObtainingMedicalConditions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

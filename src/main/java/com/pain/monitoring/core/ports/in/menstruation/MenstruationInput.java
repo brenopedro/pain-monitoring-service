@@ -1,6 +1,5 @@
-package com.pain.monitoring.core.ports.in;
+package com.pain.monitoring.core.ports.in.menstruation;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,10 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalConditionInput {
-
-    @NotBlank
-    private String name;
+public class MenstruationInput {
 
     @NotNull
     private LocalDate startDate;

@@ -1,9 +1,9 @@
 package com.pain.monitoring.infrastructure.adapters.in.web.medicalcondition;
 
-import com.pain.monitoring.core.ports.in.ForManagingMedicalCondition;
-import com.pain.monitoring.core.ports.in.ForQueryingMedicalCondition;
-import com.pain.monitoring.core.ports.in.MedicalConditionInput;
-import com.pain.monitoring.core.ports.in.MedicalConditionOutput;
+import com.pain.monitoring.core.ports.in.medicalcondition.ForManagingMedicalCondition;
+import com.pain.monitoring.core.ports.in.medicalcondition.ForQueryingMedicalCondition;
+import com.pain.monitoring.core.ports.in.medicalcondition.MedicalConditionInput;
+import com.pain.monitoring.core.ports.in.medicalcondition.MedicalConditionOutput;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

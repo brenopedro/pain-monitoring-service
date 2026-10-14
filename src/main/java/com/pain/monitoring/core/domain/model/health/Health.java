@@ -1,6 +1,7 @@
 package com.pain.monitoring.core.domain.model.health;
 
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalCondition;
+import com.pain.monitoring.core.domain.model.menstruation.Menstruation;
 import lombok.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.domain.AbstractAggregateRoot;

@@ -1,4 +1,4 @@
-package com.pain.monitoring.core.ports.out;
+package com.pain.monitoring.core.ports.out.medicalcondition;
 
 import com.pain.monitoring.core.domain.model.medicalcondition.MedicalCondition;
 
